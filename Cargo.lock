@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "equaline-riddle"
+name = "equaline"
 version = "0.1.0"

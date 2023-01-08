@@ -1,4 +1,4 @@
-type Pos = (isize, isize);
+pub type Pos = (isize, isize);
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Operator {
@@ -29,6 +29,7 @@ impl Cell {
     }
 }
 
+#[derive(Debug)]
 pub struct Board {
     board: Vec<Vec<Cell>>,
 }
@@ -38,12 +39,20 @@ impl Board {
         Board { board }
     }
 
-    fn cell_at(&self, (x, y): Pos) -> Option<Cell> {
+    pub fn cell_at(&self, (x, y): Pos) -> Option<Cell> {
         Some(
             *self
                 .board
                 .get(usize::try_from(y).ok()?)?
                 .get(usize::try_from(x).ok()?)?,
+        )
+    }
+
+    pub fn mut_cell_at(&mut self, (x, y): Pos) -> Option<&mut Cell> {
+        Some(
+            self.board
+                .get_mut(usize::try_from(y).ok()?)?
+                .get_mut(usize::try_from(x).ok()?)?,
         )
     }
 
@@ -92,7 +101,7 @@ impl Board {
     }
 }
 
-fn solve(board: &Board, target: i64) -> Vec<Vec<Pos>> {
+pub fn solve(board: &Board, target: i64) -> Vec<Vec<Pos>> {
     fn dfs(board: &Board, target: i64, current_path: &mut Vec<Pos>, ans: &mut Vec<Vec<Pos>>) {
         static ADJACENT_POS: [Pos; 4] = [(-1, 0), (1, 0), (0, -1), (0, 1)];
 
